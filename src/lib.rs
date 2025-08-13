@@ -167,3 +167,34 @@ pub fn compute_stats(results: &[i32]) -> Option<Stats> {
     Some(Stats { count, min, max, mean })
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parse_basic() {
+        let e = Expression::parse("2d6+3").unwrap();
+        assert_eq!(e.dice.len(), 1);
+        assert_eq!(e.flats.len(), 1);
+        assert_eq!(e.dice[0].count, 2);
+        assert_eq!(e.dice[0].sides, 6);
+        assert_eq!(e.flats[0].value, 3);
+    }
+
+    #[test]
+    fn parse_multiple_terms() {
+        let e = Expression::parse("3d6+2d8-1").unwrap();
+        assert_eq!(e.dice.len(), 2);
+        assert_eq!(e.flats.len(), 1);
+        assert_eq!(e.flats[0].sign, -1);
+        assert_eq!(e.flats[0].value, 1);
+    }
+
+    #[test]
+    fn parse_implicit_one() {
+        let e = Expression::parse("d20+5").unwrap();
+        assert_eq!(e.dice[0].count, 1);
+        assert_eq!(e.dice[0].sides, 20);
+        assert_eq!(e.flats[0].value, 5);
+    }
+}
