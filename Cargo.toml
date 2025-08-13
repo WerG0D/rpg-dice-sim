@@ -1,0 +1,11 @@
+[package]
+name = "rpg-dice-sim"
+version = "0.1.0"
+edition = "2021"
+description = "Simulador de dados de RPG (2d6+1, 3d6+2d8-1), com --times, vantagem e desvantagem"
+license = "MIT"
+repository = "https://github.com/WerG0D/rpg-dice-sim"
+
+[dependencies]
+rand = "0.9.2"
+clap = { version = "4", features = ["derive"] }
